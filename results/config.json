@@ -1,0 +1,19 @@
+{
+  "train_ratio": 0.7,
+  "valid_ratio": 0.1,
+  "test_ratio": 0.2,
+  "embedding_dim": 64,
+  "n_layers": 2,
+  "learning_rate": 0.001,
+  "batch_size": 2048,
+  "epochs": 100,
+  "patience": 10,
+  "neg_ratio": 1,
+  "top_k": 10,
+  "device": "mps",
+  "seed": 42,
+  "data_dir": "../data",
+  "processed_dir": "../data/processed",
+  "model_dir": "../models",
+  "result_dir": "../results"
+}

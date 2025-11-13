@@ -1,0 +1,138 @@
+================================================================================
+V8 BREAKTHROUGH - Triple Boost Strategy
+================================================================================
+PyTorch version: 2.9.0+cu128
+================================================================================
+
+⭐ V8 Configuration:
+  - Embedding dim: 64
+  - Layers: 2
+  - Learning rate: 0.0005
+  - Batch size: 512
+  - Alpha (rating weight): 0.3
+  - Beta (ranking weight): 0.7
+  - Hard negative ratio: 0.5
+  - Edge dropout: 0.1
+  - Device: cpu
+
+================================================================================
+Loading Data
+================================================================================
+Users: 668
+Items: 10321
+
+Train: 44,542
+Valid: 6,123
+Test:  13,389
+
+⭐ Preparing hard negative data (rating < 3.0)
+Low-rating samples: 13,520
+High-rating samples (train): 44,542
+Low/High ratio: 0.30
+Users with low ratings: 593
+
+================================================================================
+Graph Construction
+================================================================================
+
+[Train Graph]
+/home/user/gnn-recsys/notebooks/gnn_recsys_v8_breakthrough.py:172: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:253.)
+  edge_index = torch.tensor([
+  Nodes: 10989 (Users: 668, Items: 10321)
+  Edges: 89,084 (bidirectional)
+
+[Train+Valid Graph]
+  Nodes: 10989 (Users: 668, Items: 10321)
+  Edges: 101,330 (bidirectional)
+
+✅ Data preparation complete!
+
+⭐ Hard negative sampling function defined!
+⭐ Edge dropout function defined!
+
+================================================================================
+V8 Model Architecture Defined
+================================================================================
+✅ User/Item Bias terms added
+✅ Multi-task: Rating regression + BPR ranking
+✅ Edge dropout for graph augmentation
+
+⭐ V8 Multi-task loss function defined!
+  - Alpha (MSE weight): 0.3
+  - Beta (BPR weight): 0.7
+
+✅ Evaluation function defined!
+
+✅ Training function defined!
+
+================================================================================
+Training V8 Model
+================================================================================
+
+Model: LightGCN V8
+  - Users: 668, Items: 10321
+  - Embedding dim: 64
+  - Layers: 2
+  - Total params: 722,607
+  - ⭐ With User/Item Bias
+  - ⭐ With Rating Regression Head
+
+Training:
+  - Device: cpu
+  - Batch size: 512
+  - Learning rate: 0.0005
+  - Weight decay: 0.0001
+  - Alpha (MSE): 0.3
+  - Beta (BPR): 0.7
+  - Negative ratio: 4
+  - Hard negative ratio: 0.5
+  - Edge dropout: 0.1
+  - Patience: 20
+================================================================================
+
+Starting training...
+--------------------------------------------------------------------------------
+Epoch   1/100 | Loss: 4.6398 (MSE: 13.9011, BPR: 0.6707) | P@10: 0.0397 | R@10: 0.0657 | NDCG@10: 0.0634
+Epoch   5/100 | Loss: 0.6089 (MSE: 0.6579, BPR: 0.5879) | P@10: 0.0402 | R@10: 0.0696 | NDCG@10: 0.0655
+Epoch  10/100 | Loss: 0.5171 (MSE: 0.3603, BPR: 0.5842) | P@10: 0.0416 | R@10: 0.0727 | NDCG@10: 0.0690
+Epoch  15/100 | Loss: 0.4946 (MSE: 0.3263, BPR: 0.5667) | P@10: 0.0431 | R@10: 0.0748 | NDCG@10: 0.0700
+Epoch  20/100 | Loss: 0.4743 (MSE: 0.3109, BPR: 0.5443) | P@10: 0.0438 | R@10: 0.0738 | NDCG@10: 0.0706
+Epoch  25/100 | Loss: 0.4515 (MSE: 0.2900, BPR: 0.5208) | P@10: 0.0435 | R@10: 0.0733 | NDCG@10: 0.0697
+Epoch  30/100 | Loss: 0.4322 (MSE: 0.2751, BPR: 0.4995) | P@10: 0.0438 | R@10: 0.0695 | NDCG@10: 0.0679
+Epoch  35/100 | Loss: 0.4199 (MSE: 0.2722, BPR: 0.4832) | P@10: 0.0422 | R@10: 0.0606 | NDCG@10: 0.0643
+Epoch  40/100 | Loss: 0.4112 (MSE: 0.2655, BPR: 0.4737) | P@10: 0.0417 | R@10: 0.0600 | NDCG@10: 0.0641
+
+Early stopping at epoch 43
+================================================================================
+Training Complete!
+Best Validation Recall@10: 0.0751
+================================================================================
+
+================================================================================
+Test Set Evaluation
+================================================================================
+
+Top-5 Recommendations:
+  Precision@5: 0.1150
+  Recall@5:    0.0404
+  NDCG@5:      0.1248
+
+Top-10 Recommendations:
+  Precision@10: 0.1082
+  Recall@10:    0.0813
+  NDCG@10:      0.1300
+
+Top-20 Recommendations:
+  Precision@20: 0.0885
+  Recall@20:    0.1190
+  NDCG@20:      0.1319
+================================================================================
+
+Generating training curves...
+✅ Saved: ../results/training_curves_v8.png
+
+================================================================================
+V8 BREAKTHROUGH - Training Complete!
+================================================================================
+Best model saved to: ../models/lightgcn_v8_best.pth
+================================================================================

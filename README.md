@@ -28,7 +28,8 @@ user   item   recommend
 4      88     X
 ...
 ====================
-Total recommends = 123/200, not recommend = 77/200
+Total Recommends: 123/200
+Not Recommend: 77/200
 
 
 수업 중에 교수가 제공하는 파일을 test하여 나온 결과를 평가한다. 

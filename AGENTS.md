@@ -22,7 +22,7 @@ Train 파일들을 이용하여 학습시켜라.
 
 임의의 파일을 받아들여서 다음과 같이 추천 결과를 출력하도록 한다. 
 (이 테스트할 test 파일은 아직은 없지만 성능을 평가할 땐 train 데이터를 split 해서 만든 임시의 test 데이터를 사용하기로 하고,
-아래와같이 출력 테스트를 해볼 때는 sample2.csv를 사용하기로 함)
+아래와같이 출력 테스트를 해볼 때는 sample.csv를 사용하기로 함)
 
 ====================
 user   item   recommend
@@ -82,4 +82,22 @@ A 가 item 1~8 중 2 4 6 8 을 좋아한다, 그 중 50% 추가 추천이라면
 ### 공통:
 - 현재 존재하지 않는 user-item 쌍에 대해 추천을 하는 것 (B ver 에서 rating이 4보다 낮은 negative edge도 이미 있는 쌍임)
 - 사실 user-item 값은 test 시 데이터로 주어질 예정 그 쌍에 대해 recommend 여부를 예측하는 것
-- 
+
+### 출력 & 평가
+- sample1.csv, sample2.csv 가 있는데 둘이 내용은 똑같고 sample2.csv는 rating 컬럼이 제거되어있음
+- sample1.csv가 원본임, 5개의 user-item 쌍이 있고, rating 값은 3,3,5,3,5임
+- A ver 입장에서는 연결이 있다면 추천임. sample의 데이터에 rating 값이 있다는 것은 이미 연결이 되어있다는 것. A ver 기준에선 ooooo로 예측하는게 정답.
+- B ver 입장에서는 rating이 4 이상이어야 추천임. sample 데이터의 rating 값은 33535이기에 B ver 기준에서는 xxoxo로 예측하는 것이 정답.
+- sample1.csv, sample2.csv 는 알아서 필요한걸 사용하는걸로
+- 모델의 평가 지표는 지금 생각 나는 것으로는 auc-roc, f1 score, precision, recall, ... 등등 있는데 ver A, B 에 따라 모델이 가고자 하는 방향이 다르기에 각 버전에 맞게 적합한 평가 지표를 활용하도록. 언급한 것 외의 평가 지표도 당연히 사용 가능함
+- 모델의 loss function 또한 bpr, bce, .. 등등 다양하게 있는데 위와 마찬가지로 ver A, B 에 따라 모델이 가고자 하는 방향이 다르기에 각 버전에 맞게 적합한 loss function을 활용하도록. 언급한 것 외의 loss function도 당연히 사용 가능함
+
+## 참고 자료
+- @book.md 는"High-Dimensional Data Analysis with Low-Dimensional Models: Principles, Computation, and Applications" 라는 책의 목차임
+- 고차원으로 보이는 현실의 문제들이 사실은 저차원이었고 저차원 모델링으로도 해결이 가능하다는 내용
+- 최근에 이 책으로 공부하면서 모델 크기, feature 개수가 중요한게 아니라 저차원데이터여도 정확하게 데이터를 찾아내고 모델링하는게 중요하다고 느낌
+- 이 책의 내용이 이 프로젝트에 도움이 되지 않을 것 같다고 판단한다면 전혀 사용하지 않아도 됨
+
+## 코드 작성
+- 간단한 수정을 제외한 모든 코드 작성은 claude code 가 담당할 것임
+- 즉, codex 는 codex_docs 에 이번 작업에 대한 자세한 설명, 요구사항, 계획만 적으면 그걸 claude code에게 전달해서 코드 작성을 시킬 예정임
